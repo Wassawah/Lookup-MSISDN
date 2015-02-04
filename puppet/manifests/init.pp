@@ -7,6 +7,7 @@ include build
 include apache
 include mysql
 include php
+include composer
 
 class build {
 	

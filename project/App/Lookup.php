@@ -4,17 +4,24 @@ namespace App;
 class Lookup
 {
 
-    public function __construct()
+    public function __construct($file = "/")
     {
-        require_once("App/DB.php");
-        require_once("App/Tools.php");
+        require_once($file . "App/DB.php");
+        require_once($file . "App/Tools.php");
     }
 
-    public $return;
+    public $data;
+    public $status = 'fail';
+    public $error;
+
+    public function checkSuccess()
+    {
+        return $this->status;
+    }
 
     public function arrayFill($key, $value)
     {
-        $this->return[$key] = $value;
+        $this->data[$key] = $value;
     }
 
     public function msisdn($number)
@@ -28,12 +35,12 @@ class Lookup
             $obj->value = $number;
             $obj->checkQuery();
 
-            $this->return = $obj->result;
+            $this->data = $obj->result;
             $obj->cleanUp();
 
-            if (!empty($this->return)) {
+            if (!empty($this->data)) {
                 //check what network -> country code
-                $contryCode = $this->return['country_code'];
+                $contryCode = $this->data['country_code'];
                 $obj->valueNdc = substr($number, $obj->modeID, 3);
                 $obj->value = $contryCode;
                 $obj->checkQuery();
@@ -42,23 +49,24 @@ class Lookup
                 $obj->cleanUp();
 
                 if (empty($returned)) {
-                    $this->return['error'] = 'Unknown NDC';
+                    $this->error = array('msg' => 'Unknown NDC', 'code' => 404);
                 } else {
-                    $this->return = $returned;
+                    $this->status = 'success';
+                    $this->data = $returned;
                     $subscribe = substr($number, $obj->modeID);
-                    $this->return['numberDetail'] = $contryCode ." ". $this->return['ndc'] ." ". $subscribe;
-                    $this->return['Subscribe'] = $subscribe;
-                    $this->return['numberDetail'] = $contryCode ." ". $subscribe;
+                    $this->data['numberDetail'] = $contryCode ." ". $this->data['ndc'] ." ". $subscribe;
+                    $this->data['Subscribe'] = $subscribe;
+                    $this->data['numberDetail'] = $contryCode ." ". $subscribe;
                 }
             } else {
-                $this->arrayFill('error', 'Unknown Country');
+                $this->error = array('msg' => 'Unknown Country', 'code' => 404);
             }
         } else {
-            $this->arrayFill('error', 'This is not a MSISDN?');
+            $this->error = array('msg' => 'This is not a MSISDN?', 'code' => 204);
         }
         $this->arrayFill('number', $number);
 
-        return $this->return;
+        return $this->data;
     }
 
     public function cleanNumber($number)

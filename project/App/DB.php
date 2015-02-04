@@ -34,9 +34,6 @@ class Database extends PDO
             $stmt = $this->DBH->prepare($query);
             $stmt->execute($params);
             $results = $stmt->fetch(PDO::FETCH_ASSOC);
-            if ($results) {
-                echo '{"wine": ' . json_encode($results) . '}';
-            }
             return $results;
         } catch (PDOException $e) {
             throw new Exception($e->getMessage());

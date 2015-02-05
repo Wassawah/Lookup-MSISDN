@@ -5,7 +5,9 @@ VAGRANT_VERSION = "2"
 
 Vagrant.configure(VAGRANT_VERSION) do |config|
 
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box     = "precise64"
+  config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+
   config.vm.provider "virtualbox" do |v|
     v.memory = 512
   end

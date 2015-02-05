@@ -52,6 +52,7 @@ class TestLookup extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * error check :P 
      * @dataProvider providertestmsisdnReturnArray
      */
     public function testmsisdnReturnArray($number, $expectedResult)
@@ -60,15 +61,16 @@ class TestLookup extends \PHPUnit_Framework_TestCase
 
         $result = $lookup->msisdn($number);
 
-        $this->assertContains($expectedResult, $result);
+        print_r($lookup->error);
+
+        $this->assertContains($expectedResult, $lookup->error);
     }
     public function providertestmsisdnReturnArray()
     {
         return array(
-            array('89798979', 'Unknown Country'),
-            array('dfa43qa', 'This is not a MSISDN?'),
-            array('654534165', 'Unknown NDC'),
-            array('0038640544652', 'SI.Mobil'),
+            array('89798979', '404'),
+            array('dfa43qa', '204'),
+            array('654534165', '404'),
         );
     }
 }

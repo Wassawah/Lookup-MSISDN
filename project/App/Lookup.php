@@ -4,7 +4,7 @@ namespace App;
 class Lookup
 {
 
-    public function __construct($file = "/")
+    public function __construct($file = "")
     {
         require_once($file . "App/DB.php");
         require_once($file . "App/Tools.php");

@@ -1,10 +1,9 @@
 class php {
-   $php = ["php5-mysql"]
+   $php = ["php5-mysql", "php5", "php5-cli", "php5-xdebug", "php-pear"]
 
     package 
     { 
         $php:
-            notify  => Service["apache2"], 
             ensure  => present,
             require => Exec['apt-get update']
     }

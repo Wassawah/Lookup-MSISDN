@@ -15,7 +15,6 @@ class Database extends PDO
         $this->config = parse_ini_file('config.ini', true);
         // Attempt DB connection
         try {
-            
             $host = $this->config['host'];
             $dbname = $this->config['dbname'];
             $user = $this->config['user'];

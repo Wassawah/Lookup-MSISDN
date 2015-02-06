@@ -15,6 +15,7 @@ vagrant up
 http://127.0.0.1:8080/api:number
 
 get error if :number null
+
 get no content if :number is not msisdn number
 
 ### Example:

@@ -24,6 +24,9 @@ if (isset($_POST['phone']) && ($_POST['phone'] != "")) {
 
     $lookup = new \App\Lookup();
     $info = $lookup->msisdn($number);
+    if (!empty($lookup->error['msg'])) {
+        $info['error'] = $lookup->error['msg'];
+    }
 
     $labels = array(
         "number" => "Search: ",

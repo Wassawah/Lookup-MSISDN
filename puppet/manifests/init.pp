@@ -11,12 +11,12 @@ include composer
 
 class build {
 	
-    #package 
-    #{ 
-    #   "build-essential":
-    #       ensure  => present,
-    #       require => Exec['apt-get update']
-    #}
+    package 
+    { 
+       "build-essential":
+           ensure  => present,
+           require => Exec['apt-get update']
+    }
 
 	exec 
 	{ 

@@ -18,6 +18,13 @@ class build {
            require => Exec['apt-get update']
     }
 
+    package 
+    { 
+       "git":
+           ensure  => present,
+           require => Exec['apt-get update']
+    }
+
 	exec 
 	{ 
 		'apt-get update':

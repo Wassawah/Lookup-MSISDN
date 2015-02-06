@@ -10,6 +10,8 @@ Need:
 Install:
 vagrant up
 
+(need more time because of composer)
+
 ## Usage
 
 http://127.0.0.1:8080/api:number
